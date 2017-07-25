@@ -8,5 +8,28 @@ RSpec.describe NotesController, type: :controller do
     end
   end
 
+  describe 'notes#create' do
+    before do
+      post :create, params: {note: {title: 'First', content: 'Hello'}}
+    end
+      
+    it 'should return 200 status code' do 
+      expect(response).to be_success
+    end
+
+    it 'should succesfully create and save a new note in the database' do
+      note = Note.last
+      expect(note.content).to eq('Hello')
+      expect(note.title).to eq('First')
+    end
+
+    it 'should return the created note in response body' do
+      json = JSON.parse(response.body)
+      expect(json['content']).to eq ('Hello')
+      expect(json['title']).to eq ('First')
+    end
+  
+  end
+
 
 end
