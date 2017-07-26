@@ -8,12 +8,14 @@ class NotesController < ApplicationController
     note = Note.create(note_params)
     if note.valid?
        render json: note, status: :created
-     else
+    else
       render json: render_errors(note), status: :unprocessable_entity
     end
-    
-  
-   
+  end
+
+  def show
+    note = Note.find(params[:id])
+    render json: note
   end
 
   private
